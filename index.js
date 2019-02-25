@@ -53,6 +53,18 @@ function restricted(req, res, next) {
         })
 }
 
+server.get('/api/users', restricted, async (req, res) => {
+    try {
+        const users = await UserFuncs.find();
+
+        users.map(user => {
+            res.json({id: user.id, username: user.username})
+        })
+        // res.json(users)
+    } catch (error) {
+        res.send(error)
+    }
+});
 server.listen(4000, () => {
     console.log('Server listening on port 4000.')
 })
